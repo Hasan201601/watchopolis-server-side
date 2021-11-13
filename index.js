@@ -51,6 +51,16 @@ async function run() {
             const result = await ordersCollection.deleteOne(query);
             res.json(result)
         })
+        //Update order status
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: objectId(id) }
+            const updateDoc = {
+                $set: { status: 'shipped' }
+            }
+            const result = await ordersCollection.updateOne(filter, updateDoc)
+            res.json(result)
+        })
 
         //  Watches API
         //  GET watches
